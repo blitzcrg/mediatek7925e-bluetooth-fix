@@ -15,22 +15,21 @@ This misidentification causes several issues:
 
 ### How GIO/GVFS Interferes
 
-**GVFS** (GNOME Virtual File System) is a userspace filesystem implementation used by many Linux desktop environments. When it detects what it thinks is a media device (camera, phone, media player), it automatically attempts to:
+**GVFS** (GNOME Virtual File System) and GIO are userspace filesystem implementations used by many Linux distros. When they detect what they think is a media device (camera, phone, media player), they automatically attempt to:
 
 1. **Mount the device** as a storage location
 2. **Create a virtual filesystem** endpoint for file browsing
 3. **Claim exclusive access** to the USB device
 4. **Trigger desktop notifications** about the "new device"
 
-When GVFS tries to mount your WiFi/Bluetooth card as a media device:
+When GVFS/GIO tries to mount your WiFi/Bluetooth card as a media device:
 
 - The Bluetooth subsystem **loses access** to the device
 - Bluetooth services **crash or fail to initialize**
 - WiFi functionality may be **disrupted**
 - The device becomes **unavailable** to its proper drivers
-- Desktop environment may show **error notifications**
 
-This happens because GVFS's userspace claim on the device conflicts with the kernel drivers (btusb, mt76) that need low-level access to manage WiFi and Bluetooth functionality.
+This happens because GVFS/GIO's userspace claim on the device conflicts with the kernel drivers (btusb, mt7xxx) that need low-level access to manage WiFi and Bluetooth functionality.
 
 ## Affected Devices
 
@@ -74,7 +73,7 @@ The rule matches your specific device by vendor/product ID and:
 
 - Clears incorrect identification flags
 - Tells userspace tools to ignore the device
-- Allows kernel drivers (btusb, mt76) to claim it normally
+- Allows kernel drivers (btusb, mt7xxx) to claim it normally
 - Prevents desktop environments from trying to mount it
 
 ## Installation
@@ -189,12 +188,13 @@ If `lsusb` doesn't show your device:
 - Root/sudo access
 
 **Tested on:**
-- Ubuntu 25.04+
+- Ubuntu 25.04
 - Fedora 42
 
 ## License
 
 MIT License - Feel free to use and modify
+
 ---
 
 **Note:** This fix is specific to the device ID `0489:e111`. If you have a different MediaTek WiFi/Bluetooth card with similar issues, you'll need to modify the vendor/device IDs in the script and udev rule.
