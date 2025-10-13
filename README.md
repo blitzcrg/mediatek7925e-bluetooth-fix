@@ -4,7 +4,7 @@ A fix for MediaTek WiFi/Bluetooth combo cards that are incorrectly identified as
 
 ## The Problem
 
-Some MediaTek WiFi/Bluetooth combo cards (specifically vendor ID `0489`, device ID `e111` from Foxconn/Hon Hai) are being misidentified by Linux system components. When connected, the device is incorrectly recognized as:
+Some MediaTek WiFi/Bluetooth combo cards (specifically vendor ID `0489`, device ID `e111`) are being misidentified by Linux system components. When connected, the device is incorrectly recognized as:
 
 - A PTP camera (gPhoto2)
 - An MTP device (Media Transfer Protocol)
@@ -35,7 +35,7 @@ This happens because GVFS/GIO's userspace claim on the device conflicts with the
 
 This fix is specifically for:
 
-- **Vendor ID:** 0489 (Foxconn / Hon Hai)
+- **Vendor ID:** 0489
 - **Device ID:** e111
 - **Chip:** MediaTek WiFi/Bluetooth combo card
 - **Common in:** Various laptop models with integrated wireless cards
